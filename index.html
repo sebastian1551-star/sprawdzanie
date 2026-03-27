@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>Akty prawne – mobilna wersja</title>
+<title>Akty prawne</title>
 
 <style>
 body {
@@ -12,148 +12,114 @@ body {
 }
 
 h1 {
+    background: #2e7d32;
+    color: white;
     padding: 15px;
     margin: 0;
     font-size: 22px;
     text-align: center;
-    background: #2e7d32;
-    color: white;
 }
 
-#searchBox {
-    width: calc(100% - 30px);
-    margin: 15px;
-    padding: 12px;
-    font-size: 17px;
-    border-radius: 6px;
-    border: 1px solid #aaa;
-}
-
-#list {
+.section {
     margin: 15px;
 }
 
 .item {
-    padding: 12px;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin-bottom: 12px;
     background: #f3f3f3;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 17px;
     cursor: pointer;
     border: 1px solid #ddd;
 }
 
-#status {
-    display: none;
-    margin: 15px;
-    padding: 10px;
-    border-left: 4px solid #2e7d32;
-    background: #e8f5e9;
+.info {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #444;
 }
 
-#refreshBtn {
-    display: none;
-    margin: 0 15px;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
+button {
+    margin-top: 10px;
+    padding: 8px 14px;
     background: #2e7d32;
     color: white;
+    border: none;
     border-radius: 6px;
     cursor: pointer;
 }
-
-#viewer {
-    display: none;
-    margin: 15px;
-    width: calc(100% - 30px);
-    height: 80vh;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+button:hover {
+    background: #256728;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <h1>Akty prawne</h1>
 
-<input id="searchBox" placeholder="Szukaj ustawy...">
-
-<div id="list"></div>
-
-<div id="status"></div>
-<button id="refreshBtn">Aktualizuj</button>
-
-<!-- PDF VIEWER -->
-<iframe id="viewer"></iframe>
+<div class="section" id="list"></div>
 
 <script>
-// ------------------------------
-// LISTA 3 USTAW Z TWOICH PDF-ÓW
-// ------------------------------
+// ===== 3 ustawy =====
+// Źródła: wszystkie PDF-y pochodzą z oficjalnego ISAP (Internetowy System Aktów Prawnych)
+// Rozporządzenie 2020 – magazynowanie odpadów: Dz.U. 2020 poz. 1742  [1](https://enprom365-my.sharepoint.com/personal/s_korab_enprom_pl/Documents/Pliki%20funkcji%20Microsoft%20Copilot%20Chat/2020_odpady.pdf)
+// Ustawa OOŚ 2008: Dz.U. 2008 nr 199 poz. 1227  [2](https://enprom365-my.sharepoint.com/personal/s_korab_enprom_pl/Documents/Pliki%20funkcji%20Microsoft%20Copilot%20Chat/OO%C5%9A%202008.pdf)
+// Prawo ochrony środowiska 2001: Dz.U. 2001 nr 62 poz. 627  [3](https://enprom365-my.sharepoint.com/personal/s_korab_enprom_pl/Documents/Pliki%20funkcji%20Microsoft%20Copilot%20Chat/Prawo%20ochrony%20%C5%9Brodowiska%202001.pdf)
+// =====================
 
 const laws = [
     {
         id: "odpady2020",
         title: "Rozporządzenie ws. magazynowania odpadów (2020)",
         pdf: "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20200001742/O/D20201742.pdf",
-        updated: "Dz.U. 2020 poz. 1742"
+        updated: "Dz.U. 2020 poz. 1742 (ostatnia aktualizacja ISAP)"
     },
     {
         id: "oos2008",
         title: "Ustawa OOŚ (2008)",
         pdf: "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20081991227/U/D20081227Lj.pdf",
-        updated: "Dz.U. 2008 nr 199 poz. 1227"
+        updated: "Dz.U. 2008 nr 199 poz. 1227 (tekst ujednolicony)"
     },
     {
         id: "pos2001",
         title: "Prawo ochrony środowiska (2001)",
         pdf: "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf",
-        updated: "Dz.U. 2001 nr 62 poz. 627"
+        updated: "Dz.U. 2001 nr 62 poz. 627 (tekst jednolity 2025–2026)"
     }
 ];
 
-let current = null;
-
-// GENEROWANIE LISTY
-function renderList(filter = "") {
+function render() {
     const box = document.getElementById("list");
     box.innerHTML = "";
 
-    laws
-        .filter(l => l.title.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(law => {
-            const div = document.createElement("div");
-            div.className = "item";
-            div.textContent = law.title;
-            div.onclick = () => openLaw(law.id);
-            box.appendChild(div);
-        });
+    laws.forEach(law => {
+        const div = document.createElement("div");
+        div.className = "item";
+
+        div.innerHTML = `
+            <strong>${law.title}</strong>
+            <div class="info">Aktualność: ${law.updated}</div>
+            <button onclick="openPDF('${law.pdf}')">Otwórz PDF</button>
+            <button onclick="refresh('${law.pdf}')">Odśwież</button>
+        `;
+
+        box.appendChild(div);
+    });
 }
 
-renderList();
+render();
 
-// WYSZUKIWARKA
-document.getElementById("searchBox").addEventListener("input", e => {
-    renderList(e.target.value);
-});
+// Otwieranie PDF
+function openPDF(url) {
+    window.open(url, "_blank");
+}
 
-// OTWIERANIE PDF-a
-function openLaw(id) {
-    const law = laws.find(x => x.id === id);
-    current = law;
-
-    document.getElementById("status").style.display = "block";
-    document.getElementById("status").textContent = "Aktualność: " + law.updated;
-
-    const viewer = document.getElementById("viewer");
-    viewer.style.display = "block";
-    viewer.src = law.pdf;
-
-    const btn = document.getElementById("refreshBtn");
-    btn.style.display = "block";
-    btn.onclick = () => viewer.src = law.pdf;
+// Odświeżanie PDF (otwiera z parametrem czasu, aby ominąć cache)
+function refresh(url) {
+    const refreshed = url + "?t=" + new Date().getTime();
+    window.open(refreshed, "_blank");
 }
 </script>
 
