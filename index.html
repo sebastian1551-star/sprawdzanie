@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Prawo ochrony środowiska – Sebastian</title>
+<title>POŚ – PDF</title>
 
 <style>
 body {
@@ -21,54 +21,38 @@ header {
     text-align:center;
 }
 
-/* tryb nocny */
-.dark { background:#111 !important; color:#eee !important; }
-.dark .card { background:#222 !important; color:white !important; border-color:#555 !important; }
-.dark button { background:#333 !important; color:white !important; border-color:#777 !important; }
-
-/* przyciski */
-#modeSwitch {
-    position:fixed;
-    top:10px;
-    right:10px;
-    background:#fff;
-    border:1px solid #ccc;
-    padding:6px 12px;
-    border-radius:5px;
-}
-
-button {
-    width:100%;
-    padding:15px;
-    font-size:18px;
-    margin-top:10px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    cursor:pointer;
-}
-
-.refreshBtn { background:#e9f4ff; }
-.pdfBtn { background:white; }
-
 /* kafelek */
 .card {
     width:90%;
-    margin:30px auto;
+    margin:25px auto;
     background:white;
     border-radius:12px;
     padding:20px;
     border:1px solid #ddd;
+    cursor:pointer;
 }
-.cardTitle {
-    font-size:22px;
+
+.card:hover { background:#f0faff; }
+
+.row {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     margin-bottom:10px;
-    font-weight:bold;
 }
+
+.reloadBtn {
+    background:#e8f6ff;
+    border:1px solid #87c7ff;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
 #pdfLink {
-    font-size:16px;
-    margin-top:10px;
-    word-break:break-all;
-    color:#1a6fb3;
+    color:green;
+    font-size:17px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -76,66 +60,55 @@ button {
 <body>
 
 <header>📘 Prawo ochrony środowiska</header>
-<button id="modeSwitch">🌙 Tryb nocny</button>
 
-<div class="card">
-    <div class="cardTitle">Prawo ochrony środowiska (POŚ)</div>
+<div class="card" id="openCard">
+    <div class="row">
+        <div style="font-size:20px;font-weight:bold;">Najnowszy Dz.U.</div>
+        <button class="reloadBtn" onclick="updatePDF(event)">🔄 Przeładuj</button>
+    </div>
 
-    <button class="refreshBtn" onclick="updatePDF()">🔄 Odśwież – pobierz najnowszą wersję</button>
-    <button class="pdfBtn" id="openPDF">📄 Otwórz PDF ustawy</button>
-
-    <div id="pdfLink">Ładowanie linku…</div>
+    <div id="pdfLink">Ładowanie…</div>
 </div>
 
 <script>
-let dark = false;
-document.getElementById("modeSwitch").onclick = function() {
-    dark = !dark;
-    document.body.classList.toggle("dark");
-    this.innerHTML = dark ? "☀ Jasny tryb" : "🌙 Tryb nocny";
-};
-
 // METRYKA POŚ
 const METRYKA_URL = "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20010620627";
 
-// Aktualny link do PDF
 let currentPDF = "";
 
-// Funkcja pobierająca najnowszy PDF
-async function updatePDF() {
-    document.getElementById("pdfLink").innerHTML = "⏳ Pobieranie najnowszej wersji…";
+// pobieranie najnowszego PDF
+async function updatePDF(e) {
+    if (e) e.stopPropagation(); // by klik NIE otwierał PDF
+
+    document.getElementById("pdfLink").innerText = "⏳ Pobieranie…";
 
     try {
-        // Pobieramy stronę przez API proxy (bez CORS)
         let res = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(METRYKA_URL));
         let data = await res.json();
-
-        // Wyciąganie linku PDF ze strony HTML
         let html = data.contents;
 
-        // Szukamy pierwszego PDF z sekcji 'Tekst ogłoszony'
         let match = html.match(/https:\/\/isap\.sejm\.gov\.pl\/isap\.nsf\/download\.xsp\/[^"]+\.pdf/i);
 
-        if (match && match[0]) {
+        if (match) {
             currentPDF = match[0];
-            document.getElementById("pdfLink").innerHTML = "✅ Aktualny PDF: <br>" + currentPDF;
+            document.getElementById("pdfLink").innerText = currentPDF;
         } else {
-            document.getElementById("pdfLink").innerHTML = "❗ Nie znaleziono linku PDF.";
+            document.getElementById("pdfLink").innerText = "❗ Nie znaleziono PDF";
         }
-
-    } catch (e) {
-        document.getElementById("pdfLink").innerHTML = "❗ Błąd pobierania.";
+    } catch {
+        document.getElementById("pdfLink").innerText = "❗ Błąd pobierania";
     }
 }
 
-// kliknięcie „Otwórz PDF”
-document.getElementById("openPDF").onclick = function() {
+// klik całego kafelka = otwarcie PDF
+document.getElementById("openCard").onclick = function() {
     if (currentPDF) window.open(currentPDF, "_blank");
 };
 
-// Automatyczne pobranie linku na starcie
+// automatyczne pobranie po starcie
 updatePDF();
 </script>
 
 </body>
 </html>
+``
