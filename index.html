@@ -43,22 +43,7 @@ header {
     border:1px solid #ddd;
     border-radius:8px;
     text-align:left;
-}
-#content {
-    background:white;
-    padding:20px;
-    border-top:2px solid #1a6fb3;
-    display:none;
-    min-height:300px;
-}
-#closeBtn {
-    background:#c62828;
-    color:white;
-    padding:10px 15px;
-    border:none;
-    font-size:16px;
-    border-radius:5px;
-    margin-bottom:15px;
+    cursor:pointer;
 }
 .dark {
     background:#111 !important;
@@ -67,10 +52,6 @@ header {
 .dark button {
     background:#222 !important;
     color:#eee !important;
-}
-.dark #content {
-    background:#222 !important;
-    color:#fff !important;
 }
 #modeSwitch {
     position:fixed;
@@ -81,10 +62,6 @@ header {
     padding:6px 12px;
     border:1px solid #ccc;
     font-size:15px;
-}
-.loader {
-    font-size:20px;
-    padding:20px;
 }
 </style>
 </head>
@@ -100,43 +77,41 @@ header {
 
     <div class="sectionTitle">📚 Podstawowe ustawy</div>
     <div class="list">
-        <button onclick="openAct('poś')">Prawo ochrony środowiska</button>
-        <button onclick="openAct('odpady')">Ustawa o odpadach</button>
-        <button onclick="openAct('czystosc')">Czystość i porządek w gminach</button>
-        <button onclick="openAct('opakowania')">Gospodarka opakowaniami</button>
-        <button onclick="openAct('obowiązki')">Obowiązki przedsiębiorców</button>
-        <button onclick="openAct('oos')">Ustawa OOŚ</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf">Prawo ochrony środowiska</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000213/U/D20130213Lj.pdf">Ustawa o odpadach</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19961320622/U/D19960622Lj.pdf">Czystość i porządek w gminach</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf">Gospodarka opakowaniami</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010630639/U/D20010639Lj.pdf">Obowiązki przedsiębiorców</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20081011947/U/D20081947Lj.pdf">Ustawa OOŚ</button>
     </div>
 
     <div class="sectionTitle">🌿 Ochrona przyrody</div>
     <div class="list">
-        <button onclick="openAct('przyroda')">Ochrona przyrody</button>
-        <button onclick="openAct('gatunki')">Gatunki obce</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20040920920/U/D20040920Lj.pdf">Ochrona przyrody</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210001698/U/D20211698Lj.pdf">Gatunki obce</button>
     </div>
 
     <div class="sectionTitle">💧 Wody / Ziemia</div>
     <div class="list">
-        <button onclick="openAct('wodne')">Prawo wodne</button>
-        <button onclick="openAct('remediacja')">Remediacja terenów</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001569/U/D20171569Lj.pdf">Prawo wodne</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20230001284/U/D20231284Lj.pdf">Remediacja terenów</button>
     </div>
 
     <div class="sectionTitle">⚡ Energia / Emisje</div>
     <div class="list">
-        <button onclick="openAct('oze')">Ustawa OZE</button>
-        <button onclick="openAct('co2')">Handel emisjami</button>
-        <button onclick="openAct('powietrze')">Ochrona powietrza</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000478/U/D20150478Lj.pdf">Ustawa OZE</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000568/U/D20150568Lj.pdf">Handel emisjami</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20120000301/U/D20120301Lj.pdf">Ochrona powietrza</button>
     </div>
 
     <div class="sectionTitle">🏗 Infrastruktura</div>
     <div class="list">
-        <button onclick="openAct('geologia')">Prawo geologiczne</button>
-        <button onclick="openAct('atom')">Prawo atomowe</button>
-        <button onclick="openAct('inspekcja')">Inspekcja Ochrony Środowiska</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20110001630/U/D20111630Lj.pdf">Prawo geologiczne i górnicze</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010000318/U/D20010318Lj.pdf">Prawo atomowe</button>
+        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19910500403/U/D19910403Lj.pdf">Inspekcja Ochrony Środowiska</button>
     </div>
 
 </div>
-
-<div id="content"></div>
 
 <script>
 // ------------------ TRYB NOCNY ------------------
@@ -147,61 +122,21 @@ document.getElementById("modeSwitch").onclick = function() {
     this.innerHTML = dark ? "☀ Jasny tryb" : "🌙 Tryb nocny";
 };
 
-// ------------------ WYSZUKIWARKA ------------------
+// ------------------ WYSZUKIWARKA DZIAŁA ------------------
 document.getElementById("searchBox").addEventListener("input", function() {
-    let val = this.value.toLowerCase();
+    const val = this.value.toLowerCase();
     document.querySelectorAll(".list button").forEach(btn => {
         btn.style.display = btn.textContent.toLowerCase().includes(val) ? "block" : "none";
     });
 });
 
-// ------------------ MAPA USTAW → LINKI ISAP ------------------
-const links = {
-    "poś": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf",
-    "odpady": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000213/U/D20130213Lj.pdf",
-    "czystosc": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19961320622/U/D19960622Lj.pdf",
-    "opakowania": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf",
-    "obowiązki": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010630639/U/D20010639Lj.pdf",
-    "oos": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20081011947/U/D20081947Lj.pdf",
-    "przyroda": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20040920920/U/D20040920Lj.pdf",
-    "gatunki": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210001698/U/D20211698Lj.pdf",
-    "wodne": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001569/U/D20171569Lj.pdf",
-    "remediacja": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20230001284/U/D20231284Lj.pdf",
-    "oze": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000478/U/D20150478Lj.pdf",
-    "co2": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000568/U/D20150568Lj.pdf",
-    "powietrze": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20120000301/U/D20120301Lj.pdf",
-    "geologia": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20110001630/U/D20111630Lj.pdf",
-    "atom": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010000318/U/D20010318Lj.pdf",
-    "inspekcja": "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19910500403/U/D19910403Lj.pdf"
-};
-
-// ------------------ FUNKCJA OTWIERANIA USTAWY ------------------
-async function openAct(key) {
-    const box = document.getElementById("content");
-    const url = links[key];
-
-    box.style.display = "block";
-    box.innerHTML = `<button id='closeBtn' onclick='closeContent()'>Zamknij</button>
-                     <div class='loader'>⏳ Pobieranie treści ustawy...</div>`;
-
-    try {
-        const response = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(url));
-        const data = await response.json();
-
-        box.innerHTML = `<button id='closeBtn' onclick='closeContent()'>Zamknij</button>` +
-                        `<iframe src="${url}" width="100%" height="600px"></iframe>`;
-
-    } catch (err) {
-        box.innerHTML = `<button id='closeBtn' onclick='closeContent()'>Zamknij</button>
-                         <p>❌ Nie można pobrać treści. Kliknij poniżej:</p>
-                         <a href='${url}' target='_blank'>Otwórz ustawę w ISAP</a>`;
-    }
-}
-
-// ------------------ ZAMYKANIE PANELU ------------------
-function closeContent() {
-    document.getElementById("content").style.display="none";
-}
+// ------------------ KLIK → OTWORZENIE PDF ------------------
+document.querySelectorAll(".list button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const url = btn.getAttribute("data-url");
+        window.open(url, "_blank");
+    });
+});
 </script>
 
 </body>
