@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Akty Prawne – 3 ustawy</title>
+
+<style>
+body { font-family: Arial; margin:0; background:#f0f2f5; }
+h1 { background:#1b5e20; color:white; padding:18px; margin:0; text-align:center; }
+
+#searchBox {
+    width:90%; margin:20px auto; display:block;
+    padding:12px; font-size:17px;
+    border-radius:8px; border:2px solid #4caf50;
+}
+
+#cards {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px,1fr));
+    gap:15px; padding:20px;
+}
+
+.card {
+    padding:18px; border-radius:12px;
+    font-weight:bold; color:white; cursor:pointer;
+    transition:.2s;
+}
+.card:hover { transform:scale(1.05); }
+
+.odpady { background:#2e7d32; }
+.oos { background:#00796b; }
+.pos { background:#00695c; }
+
+#status {
+    margin:20px; background:#c8e6c9; padding:12px;
+    border-left:6px solid #1b5e20; display:none;
+    border-radius:6px; font-size:18px;
+}
+
+#refreshBtn {
+    margin-left:20px; padding:12px 22px;
+    background:#1b5e20; color:white;
+    border:none; border-radius:8px;
+    cursor:pointer; display:none;
+}
+
+#content {
+    margin:20px; padding:20px; background:white;
+    border-radius:8px; white-space:pre-wrap;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Ustawy – 3 dokumenty</h1>
+
+<input id="searchBox" placeholder="Wpisz np. 'odpady', 'OOŚ', 'POŚ'...">
+
+<div id="cards"></div>
+
+<div id="status"></div>
+<button id="refreshBtn" onclick="refreshLaw()">Aktualizuj ustawę</button>
+
+<div id="content"></div>
+
+<script>
+
+// *** 3 USTAWY Z TWOICH PDF-ÓW ***
+
+const laws = [
+    {
+        id: "odpady2020",
+        title: "Rozporządzenie ws. magazynowania odpadów (2020)",
+        category: "odpady",
+        eli: "Dz.U./2020/1742",
+        updated: "Obowiązujące (poz. 1742)"
+    },
+    {
+        id: "oos2008",
+        title: "Ustawa OOŚ (2008)",
+        category: "oos",
+        eli: "Dz.U./2008/1227",
+        updated: "Tekst jednolity 2024–2026"
+    },
+    {
+        id: "pos2001",
+        title: "Prawo ochrony środowiska (2001)",
+        category: "pos",
+        eli: "Dz.U./2001/627",
+        updated: "Tekst jednolity 2025–2026"
+    }
+];
+
+let currentLaw = null;
+
+// Render kafelków
+function render(filter="") {
+    const box = document.getElementById("cards");
+    box.innerHTML = "";
+
+    laws
+      .filter(l => l.title.toLowerCase().includes(filter.toLowerCase()))
+      .forEach(l => {
+          const c = document.createElement("div");
+          c.className = "card " + l.category;
+          c.textContent = l.title;
+          c.onclick = () => loadLaw(l.id);
+          box.appendChild(c);
+      });
+}
+
+document.getElementById("searchBox").addEventListener("input", e => {
+    render(e.target.value);
+});
+
+render();
+
+// Ładowanie ustawy
+async function loadLaw(id) {
+    const l = laws.find(x => x.id === id);
+    currentLaw = id;
+
+    document.getElementById("status").style.display = "block";
+    document.getElementById("status").innerHTML =
+        "✅ Aktualność: " + l.updated;
+
+    document.getElementById("refreshBtn").style.display = "inline-block";
+
+    const url = `https://api.sejm.gov.pl/eli/act/${l.eli}/text`;
+
+    document.getElementById("content").style.display = "block";
+    document.getElementById("content").innerHTML = "Ładowanie...";
+
+    try {
+        const r = await fetch(url);
+        const html = await r.text();
+        document.getElementById("content").innerHTML = html;
+    } catch {
+        document.getElementById("content").innerHTML =
+            "❌ Nie udało się pobrać treści (prawdopodobnie brak wersji HTML).<br><br>" +
+            "Możesz otworzyć PDF ręcznie:<br><br>" +
+            `<a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=${l.eli.replace('Dz.U./','WDU')}" target="_blank">Kliknij tutaj (ISAP)</a>`;
+    }
+}
+
+function refreshLaw() {
+    if (currentLaw) loadLaw(currentLaw);
+}
+
+</script>
+
+</body>
+</html>
+``
