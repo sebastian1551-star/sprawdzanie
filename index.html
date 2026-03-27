@@ -33,26 +33,44 @@ header {
     font-weight:bold;
     color:#333;
 }
-.list button {
+
+.actBox {
     width:90%;
-    margin:8px auto;
-    display:block;
-    padding:15px;
-    font-size:18px;
+    margin:10px auto;
+    padding:10px;
     background:white;
+    border-radius:10px;
     border:1px solid #ddd;
-    border-radius:8px;
-    text-align:left;
-    cursor:pointer;
 }
+
+.pdfBtn, .updateBtn {
+    width:100%;
+    padding:14px;
+    font-size:17px;
+    border-radius:8px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    cursor:pointer;
+    text-align:left;
+}
+
+.pdfBtn { background:#ffffff; }
+.updateBtn { background:#e8f4ff; }
+
 .dark {
     background:#111 !important;
     color:#eee !important;
 }
-.dark button {
+.dark .actBox {
     background:#222 !important;
-    color:#eee !important;
+    border-color:#555 !important;
 }
+.dark .pdfBtn, .dark .updateBtn {
+    background:#333 !important;
+    color:#eee !important;
+    border-color:#555 !important;
+}
+
 #modeSwitch {
     position:fixed;
     top:10px;
@@ -75,46 +93,121 @@ header {
 
 <div id="listContainer">
 
+    <!-- PODSTAWOWE USTAWY -->
     <div class="sectionTitle">📚 Podstawowe ustawy</div>
-    <div class="list">
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf">Prawo ochrony środowiska</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000213/U/D20130213Lj.pdf">Ustawa o odpadach</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19961320622/U/D19960622Lj.pdf">Czystość i porządek w gminach</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf">Gospodarka opakowaniami</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010630639/U/D20010639Lj.pdf">Obowiązki przedsiębiorców</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20081011947/U/D20081947Lj.pdf">Ustawa OOŚ</button>
+
+    <div class="actBox">
+        <div><b>Prawo ochrony środowiska</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20010620627">🔄 Aktualizuj</button>
     </div>
 
+    <div class="actBox">
+        <div><b>Ustawa o odpadach</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000213/U/D20130213Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20130000213">🔄 Aktualizuj</button>
+    </div>
+
+    <div class="actBox">
+        <div><b>Czystość i porządek w gminach</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19961320622/U/D19960622Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19961320622">🔄 Aktualizuj</button>
+    </div>
+
+    <div class="actBox">
+        <div><b>Gospodarka opakowaniami</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20130000888">🔄 Aktualizuj</button>
+    </div>
+
+    <div class="actBox">
+        <div><b>Obowiązki przedsiębiorców (opłata produktowa)</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010630639/U/D20010639Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20010630639">🔄 Aktualizuj</button>
+    </div>
+
+    <div class="actBox">
+        <div><b>Ustawa OOŚ</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20081011947/U/D20081947Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20081011947">🔄 Aktualizuj</button>
+    </div>
+
+    <!-- OCHRONA PRZYRODY -->
     <div class="sectionTitle">🌿 Ochrona przyrody</div>
-    <div class="list">
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20040920920/U/D20040920Lj.pdf">Ochrona przyrody</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210001698/U/D20211698Lj.pdf">Gatunki obce</button>
+
+    <div class="actBox">
+        <div><b>Ustawa o ochronie przyrody</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20040920920/U/D20040920Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20040920920">🔄 Aktualizuj</button>
     </div>
 
+    <div class="actBox">
+        <div><b>Gatunki obce</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210001698/U/D20211698Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20210001698">🔄 Aktualizuj</button>
+    </div>
+
+    <!-- WODY / ZIEMIA -->
     <div class="sectionTitle">💧 Wody / Ziemia</div>
-    <div class="list">
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001569/U/D20171569Lj.pdf">Prawo wodne</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20230001284/U/D20231284Lj.pdf">Remediacja terenów</button>
+
+    <div class="actBox">
+        <div><b>Prawo wodne</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001569/U/D20171569Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20170001569">🔄 Aktualizuj</button>
     </div>
 
+    <div class="actBox">
+        <div><b>Remediacja terenów zdegradowanych</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20230001284/U/D20231284Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20230001284">🔄 Aktualizuj</button>
+    </div>
+
+    <!-- ENERGIA -->
     <div class="sectionTitle">⚡ Energia / Emisje</div>
-    <div class="list">
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000478/U/D20150478Lj.pdf">Ustawa OZE</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000568/U/D20150568Lj.pdf">Handel emisjami</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20120000301/U/D20120301Lj.pdf">Ochrona powietrza</button>
+
+    <div class="actBox">
+        <div><b>Ustawa o OZE</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000478/U/D20150478Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20150000478">🔄 Aktualizuj</button>
     </div>
 
+    <div class="actBox">
+        <div><b>Handel emisjami (ETS)</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000568/U/D20150568Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20150000568">🔄 Aktualizuj</button>
+    </div>
+
+    <div class="actBox">
+        <div><b>Ochrona powietrza i hałas</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20120000301/U/D20120301Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20120000301">🔄 Aktualizuj</button>
+    </div>
+
+    <!-- GEOLOGIA / ATOM -->
     <div class="sectionTitle">🏗 Infrastruktura</div>
-    <div class="list">
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20110001630/U/D20111630Lj.pdf">Prawo geologiczne i górnicze</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010000318/U/D20010318Lj.pdf">Prawo atomowe</button>
-        <button data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19910500403/U/D19910403Lj.pdf">Inspekcja Ochrony Środowiska</button>
+
+    <div class="actBox">
+        <div><b>Prawo geologiczne i górnicze</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20110001630/U/D20111630Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20110001630">🔄 Aktualizuj</button>
+    </div>
+
+    <div class="actBox">
+        <div><b>Prawo atomowe</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010000318/U/D20010318Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20010000318">🔄 Aktualizuj</button>
+    </div>
+
+    <div class="actBox">
+        <div><b>Inspekcja Ochrony Środowiska</b></div>
+        <button class="pdfBtn" data-url="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU19910500403/U/D19910403Lj.pdf">📄 Pobierz PDF</button>
+        <button class="updateBtn" data-update="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19910500403">🔄 Aktualizuj</button>
     </div>
 
 </div>
 
 <script>
-// ------------------ TRYB NOCNY ------------------
+// TRYB NOCNY
 let dark = false;
 document.getElementById("modeSwitch").onclick = function() {
     dark = !dark;
@@ -122,19 +215,25 @@ document.getElementById("modeSwitch").onclick = function() {
     this.innerHTML = dark ? "☀ Jasny tryb" : "🌙 Tryb nocny";
 };
 
-// ------------------ WYSZUKIWARKA DZIAŁA ------------------
+// WYSZUKIWARKA
 document.getElementById("searchBox").addEventListener("input", function() {
     const val = this.value.toLowerCase();
-    document.querySelectorAll(".list button").forEach(btn => {
-        btn.style.display = btn.textContent.toLowerCase().includes(val) ? "block" : "none";
+    document.querySelectorAll(".actBox").forEach(box => {
+        box.style.display = box.innerText.toLowerCase().includes(val) ? "block" : "none";
     });
 });
 
-// ------------------ KLIK → OTWORZENIE PDF ------------------
-document.querySelectorAll(".list button").forEach(btn => {
+// PDF
+document.querySelectorAll(".pdfBtn").forEach(btn => {
     btn.addEventListener("click", () => {
-        const url = btn.getAttribute("data-url");
-        window.open(url, "_blank");
+        window.open(btn.getAttribute("data-url"), "_blank");
+    });
+});
+
+// Aktualizacje
+document.querySelectorAll(".updateBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        window.open(btn.getAttribute("data-update"), "_blank");
     });
 });
 </script>
