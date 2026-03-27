@@ -26,12 +26,15 @@ h1 {
 
 .item {
     padding: 15px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     background: #f3f3f3;
     border-radius: 6px;
-    font-size: 17px;
-    cursor: pointer;
     border: 1px solid #ddd;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .info {
@@ -42,7 +45,8 @@ h1 {
 
 button {
     margin-top: 10px;
-    padding: 8px 14px;
+    margin-right: 10px;
+    padding: 9px 14px;
     background: #2e7d32;
     color: white;
     border: none;
@@ -53,8 +57,8 @@ button:hover {
     background: #256728;
 }
 </style>
-
 </head>
+
 <body>
 
 <h1>Akty prawne</h1>
@@ -62,31 +66,41 @@ button:hover {
 <div class="section" id="list"></div>
 
 <script>
-// ===== 3 ustawy =====
-// Źródła: wszystkie PDF-y pochodzą z oficjalnego ISAP (Internetowy System Aktów Prawnych)
-// Rozporządzenie 2020 – magazynowanie odpadów: Dz.U. 2020 poz. 1742  [1](https://enprom365-my.sharepoint.com/personal/s_korab_enprom_pl/Documents/Pliki%20funkcji%20Microsoft%20Copilot%20Chat/2020_odpady.pdf)
-// Ustawa OOŚ 2008: Dz.U. 2008 nr 199 poz. 1227  [2](https://enprom365-my.sharepoint.com/personal/s_korab_enprom_pl/Documents/Pliki%20funkcji%20Microsoft%20Copilot%20Chat/OO%C5%9A%202008.pdf)
-// Prawo ochrony środowiska 2001: Dz.U. 2001 nr 62 poz. 627  [3](https://enprom365-my.sharepoint.com/personal/s_korab_enprom_pl/Documents/Pliki%20funkcji%20Microsoft%20Copilot%20Chat/Prawo%20ochrony%20%C5%9Brodowiska%202001.pdf)
-// =====================
-
 const laws = [
+
+    // --- stare 3 ustawy ---
     {
-        id: "odpady2020",
         title: "Rozporządzenie ws. magazynowania odpadów (2020)",
         pdf: "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20200001742/O/D20201742.pdf",
-        updated: "Dz.U. 2020 poz. 1742 (ostatnia aktualizacja ISAP)"
+        updated: "Dz.U. 2020 poz. 1742"
     },
     {
-        id: "oos2008",
         title: "Ustawa OOŚ (2008)",
         pdf: "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20081991227/U/D20081227Lj.pdf",
-        updated: "Dz.U. 2008 nr 199 poz. 1227 (tekst ujednolicony)"
+        updated: "Tekst jednolity (najnowszy na ISAP)"
     },
     {
-        id: "pos2001",
         title: "Prawo ochrony środowiska (2001)",
         pdf: "https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf",
-        updated: "Dz.U. 2001 nr 62 poz. 627 (tekst jednolity 2025–2026)"
+        updated: "Tekst jednolity 2025–2026"
+    },
+
+    // --- nowe 3 ustawy z PDF-ów ---
+
+    {
+        title: "Prawo wodne (2017)",
+        pdf: "Prawo wodne 2017.pdf",
+        updated: "aktualizacja: 2025-12-04"
+    },
+    {
+        title: "Ustawa o odpadach (2012)",
+        pdf: "Ustawa o odpadach 2012.pdf",
+        updated: "aktualizacja: 2025-12-29"
+    },
+    {
+        title: "Zmiana ustawy o odpadach (2021)",
+        pdf: "zmiana odpady 2021.pdf",
+        updated: "aktualizacja: 2021-11-30"
     }
 ];
 
@@ -99,10 +113,10 @@ function render() {
         div.className = "item";
 
         div.innerHTML = `
-            <strong>${law.title}</strong>
-            <div class="info">Aktualność: ${law.updated}</div>
+            <div class="title">${law.title}</div>
+            <div class="info">${law.updated}</div>
             <button onclick="openPDF('${law.pdf}')">Otwórz PDF</button>
-            <button onclick="refresh('${law.pdf}')">Odśwież</button>
+            <button onclick="refreshPDF('${law.pdf}')">Odśwież</button>
         `;
 
         box.appendChild(div);
@@ -111,15 +125,13 @@ function render() {
 
 render();
 
-// Otwieranie PDF
-function openPDF(url) {
-    window.open(url, "_blank");
+function openPDF(file) {
+    window.open(file, "_blank");
 }
 
-// Odświeżanie PDF (otwiera z parametrem czasu, aby ominąć cache)
-function refresh(url) {
-    const refreshed = url + "?t=" + new Date().getTime();
-    window.open(refreshed, "_blank");
+function refreshPDF(file) {
+    const url = file + "?t=" + new Date().getTime();
+    window.open(url, "_blank");
 }
 </script>
 
